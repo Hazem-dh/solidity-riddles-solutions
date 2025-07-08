@@ -1,12 +1,9 @@
-const {
-    time,
-    loadFixture,
-} = require("@nomicfoundation/hardhat-network-helpers");
+const { time, loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-const NAME = "Overmint2"
+const NAME = "Overmint2";
 
 describe(NAME, function () {
     async function setup() {
@@ -22,7 +19,7 @@ describe(NAME, function () {
         let victimContract, attackerWallet;
         before(async function () {
             ({ victimContract, attackerWallet } = await loadFixture(setup));
-        })
+        });
 
         it("conduct your attack here", async function () {
             const AttackerFactory = await ethers.getContractFactory("Overmint2Attacker");
@@ -31,7 +28,10 @@ describe(NAME, function () {
 
         after(async function () {
             expect(await victimContract.balanceOf(attackerWallet.address)).to.be.equal(5);
-            expect(await ethers.provider.getTransactionCount(attackerWallet.address)).to.equal(1, "must exploit one transaction");
+            expect(await ethers.provider.getTransactionCount(attackerWallet.address)).to.equal(
+                1,
+                "must exploit one transaction"
+            );
         });
     });
 });
