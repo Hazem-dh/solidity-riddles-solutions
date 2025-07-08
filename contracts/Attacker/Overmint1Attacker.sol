@@ -4,7 +4,7 @@ pragma solidity 0.8.15;
 import "../Overmint1.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
-contract Overmint1Attacker {
+contract Overmint1Attacker is IERC721Receiver {
     Overmint1 public victimContract;
     uint recursionCount = 0;
     constructor(address _victimContract) {
