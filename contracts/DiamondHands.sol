@@ -66,6 +66,7 @@ contract DiamondHands {
         // delete loser
         uint len = deposits.length;
         for (uint i = 0; i < len; i++) {
+            // this can revert
             nft.safeTransferFrom(address(this), deposits[i].owner, deposits[i].id);
 
             if (deposits[i].owner == msg.sender) {
@@ -74,8 +75,11 @@ contract DiamondHands {
             }
         }
         require(onlyOwnercanCall, "only owner can call this function");
+        // this line can screw everything
         delete deposits[ownerindex];
     }
+
+    //Useless function since can be entered only after deadline
 
     /// @notice Withdraw the 1 Ether deposit after the deadline
     /// @dev uses send() to transfer the ether to prevent griefing from infinite loops and revert on receive
@@ -130,7 +134,7 @@ contract ChickenBonds is ERC721 {
             _mint(owners[i], i + 1);
         }
     }
-
+    // a fishy open function
     function FryChicken(address to, uint256 tokenId) public {
         _mint(to, tokenId);
     }
