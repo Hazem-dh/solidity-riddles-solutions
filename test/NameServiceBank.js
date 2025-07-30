@@ -41,11 +41,7 @@ describe(NAME, function () {
     }
 
     describe("exploit", async function () {
-        let bankBalanceOfBefore,
-            NameServiceAttackerBalanceOfBefore,
-            nameServiceBank,
-            TwentyEther,
-            NameServiceAttacker,
+        let bankBalanceOfBefore, NameServiceAttackerBalanceOfBefore, nameServiceBank, TwentyEther, NameServiceAttacker;
 
         before(async function () {
             ({ nameServiceBank, TwentyEther, NameServiceAttacker } = await loadFixture(setup));
