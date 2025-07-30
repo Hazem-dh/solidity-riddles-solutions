@@ -13,6 +13,9 @@ module.exports = {
             "contracts/NameServiceBank.sol": {
                 version: "0.7.0",
             },
+            "contracts/Attacker/NameServiceAttacker.sol": {
+                version: "0.7.0",
+            },
         },
     },
 };

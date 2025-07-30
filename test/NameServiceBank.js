@@ -25,7 +25,7 @@ describe(NAME, function () {
         const now = await time.latest();
         await nameServiceBank
             .connect(victim)
-            .setUsername("samczsun", 0, [now + 120, now], { value: ethers.utils.parseEther("1") });
+            .setUsername("samczsun", 2, [now + 120, now], { value: ethers.utils.parseEther("1") });
         await nameServiceBank.connect(victim).deposit({ value: TwentyEther });
 
         // make attack contract named "NameServiceAttacker" deployed by attacker wallet
@@ -41,7 +41,11 @@ describe(NAME, function () {
     }
 
     describe("exploit", async function () {
-        let bankBalanceOfBefore, NameServiceAttackerBalanceOfBefore, nameServiceBank, TwentyEther, NameServiceAttacker;
+        let bankBalanceOfBefore,
+            NameServiceAttackerBalanceOfBefore,
+            nameServiceBank,
+            TwentyEther,
+            NameServiceAttacker,
 
         before(async function () {
             ({ nameServiceBank, TwentyEther, NameServiceAttacker } = await loadFixture(setup));
@@ -60,6 +64,7 @@ describe(NAME, function () {
             // contract you are attacking.
             // We've already written the JS code above to deploy a
             // contract called "NameServiceAttacker" for you.
+            await NameServiceAttacker.attack({ value: ethers.utils.parseEther("1") });
         });
 
         after(async function () {
