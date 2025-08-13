@@ -6,7 +6,6 @@ import "../DeleteUser.sol";
 
 contract DeleteUserAttacker {
     DeleteUser public victimContract;
-    uint recursionCount = 0;
 
     constructor(address _victimContract) payable {
         // need to perform attack here since only 1 tx needed
