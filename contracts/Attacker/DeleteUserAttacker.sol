@@ -16,6 +16,4 @@ contract DeleteUserAttacker {
         victimContract.withdraw(1);
         victimContract.withdraw(1);
     }
-
-    function attack() public payable {}
 }
